@@ -1,0 +1,46 @@
+<div class="hexagram-container">
+  <h1>Ask the I Ching</h1>
+  
+  <div class="question-input">
+    <label for="question">Your Question:</label>
+    <input 
+      type="text" 
+      id="question" 
+      [(ngModel)]="question" 
+      placeholder="Enter your question here" />
+  </div>
+  
+  <div class="actions">
+    <button class="throw-coins-btn" (click)="throwCoins()">Throw the Coins</button>
+  </div>
+  
+  <div class="coin-animations" *ngIf="isLoading">
+    <div *ngFor="let coin of coinResults; let i = index" class="coin">
+      <div [class]="coin === 2 ? 'heads' : 'tails'"></div>
+    </div>
+  </div>
+
+  <div *ngIf="coinResults.length > 0 && !isLoading">
+    <h3>Coin Results:</h3>
+    <p>{{ coinResults }}</p>
+  </div>
+  
+  <div *ngIf="isLoading; else loadedResponse" class="loading-section">
+    <p>Loading, please wait...</p>
+    <div class="spinner"></div>
+  </div>
+  
+  <ng-template #loadedResponse>
+    <div *ngIf="response" class="response-section">
+      <div class="answer">
+        <h3>Answer:</h3>
+        <p>{{ response.answer }}</p>
+      </div>
+      <div class="image-result" *ngIf="response.image">
+        <h3>Image:</h3>
+        <img [src]="response.image" alt="Generated Image" />
+      </div>
+    </div>
+  </ng-template>
+  
+</div>
